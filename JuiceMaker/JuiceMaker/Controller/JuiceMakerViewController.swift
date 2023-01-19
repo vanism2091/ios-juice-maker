@@ -56,19 +56,17 @@ extension JuiceMakerViewController: FruitView {
 //MARK: - StoreView로 전환
 extension JuiceMakerViewController {
     private func showStoreView() {
-        guard let storeNavi = buildStoreNavigationContoller(),
-              let storeVC = buildStoreViewController() else { return }
-        
-        storeNavi.setViewControllers([storeVC], animated: true)
+        guard let storeVC = buildStoreViewController() else { return }
+        let storeNavi = buildStoreNavigationController(rootVC: storeVC)
+
         present(storeNavi, animated: true)
     }
     
-    private func buildStoreNavigationContoller() -> UINavigationController? {
-        guard let storeNavigationContoller = storyboard?.instantiateViewController(withIdentifier: ViewController.storeNavi)
-                as? UINavigationController else { return nil }
-        
+    private func buildStoreNavigationController(rootVC: UIViewController) -> UINavigationController {
+        let storeNavigationContoller = UINavigationController(rootViewController: rootVC)
         storeNavigationContoller.modalPresentationStyle = .fullScreen
         storeNavigationContoller.modalTransitionStyle = .coverVertical
+
         return storeNavigationContoller
     }
     
